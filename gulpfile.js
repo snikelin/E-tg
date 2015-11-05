@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var stylus = require("gulp-stylus");
 var gls = require("gulp-live-server");
+var testServer = require('karma').Server;
+var mocha = require("gulp-mocha");
 
 var paths = {
   stylus: ['app/css/**/*.styl']
@@ -32,3 +34,20 @@ gulp.task('serve',['watch'], function(){
         server.start.bind(server)();
     })
 });
+
+gulp.task('test_app',function(done){
+    new testServer({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('test_server',function(){
+    gulp.src("server/tests/**/*.test.js",{read:false})
+        .pipe(mocha({
+            reporter: 'spec',
+            require: ['chai']
+        }));
+});
+
+gulp.task('test',['test_server','test_app']);

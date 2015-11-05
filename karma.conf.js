@@ -20,8 +20,8 @@ module.exports = function(config){
       // needs to be last
       'app/main.js'
     ],
-    autoWatch: false,
-    singleRun: true,
+    autoWatch: true,
+    //singleRun: true,
     frameworks: ['mocha','requirejs','chai'],
     browsers: ['PhantomJS'],
     reporters: ['mocha','coverage'],
