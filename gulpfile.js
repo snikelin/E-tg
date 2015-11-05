@@ -3,6 +3,7 @@ var stylus = require("gulp-stylus");
 var gls = require("gulp-live-server");
 var testServer = require('karma').Server;
 var mocha = require("gulp-mocha");
+var bower = require("gulp-bower");
 
 var paths = {
   stylus: ['app/css/**/*.styl']
@@ -18,6 +19,11 @@ gulp.task('stylus', function(done) {
     .pipe(gulp.dest('app/css/'))
     .on('end', done);
 });
+
+gulp.task("bower", function(){
+    return bower()
+        .pipe(gulp.dest("app/bower_components"));
+})
 
 gulp.task('watch', function() {
   gulp.watch(paths.stylus, ['stylus']);
