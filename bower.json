@@ -1,0 +1,32 @@
+{
+  "name": "E-tg",
+  "version": "0.0.0",
+  "authors": [
+    "Beeven Yip <beeven@hotmail.com>"
+  ],
+  "private": true,
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-animate": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "requirejs": "~2.1.20",
+    "html5-boilerplate": "~5.2.0",
+    "angular-mocks": "~1.4.7",
+    "angular-resource": "~1.4.7",
+    "angular-cookies": "~1.4.7",
+    "jquery": "~2.1.4",
+    "angular-sanitize": "~1.4.7",
+    "angular-touch": "~1.4.7",
+    "angular-bootstrap": "~0.14.3",
+    "bootstrap": "~3.3.5",
+    "angular-md5": "~0.1.8"
+  }
+}
