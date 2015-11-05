@@ -1,18 +1,27 @@
 language: node_js
 node_js:
   - "4.2.1"
+os:
+  - linux
+
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - gcc-4.9
-      - g++-4.9
+      - gcc-5.2
+      - g++-5.2
 
+services:
+  - mongodb
+  - redis
 
+before_install:
+  - export CC="gcc-4.9" CXX="g++-5.2"
 before_script:
+  - npm install -g gulp
+  - npm install -g bower
   - export DISPLAY=:99.0
-  - export CC="gcc-4.9" CXX="g++-4.9"
   - sh -e /etc/init.d/xvfb start
   - sleep 1 # give server time to start
 
