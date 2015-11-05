@@ -1,10 +1,13 @@
 {
   "globalstrict": true,
-  "browser": true,
-  "jasmine": true,
-  "predef": [
-    "require",
-    "define",
-    "notify"
-  ]
+  "globals": {
+    "angular": false,
+    "describe": false,
+    "it": false,
+    "expect": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "module": false,
+    "inject": false
+  }
 }
