@@ -43,5 +43,5 @@ module.exports = function(config){
       'karma-mocha-reporter',
       'karma-coverage'
     ]
-  })
-}
+  });
+};

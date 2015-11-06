@@ -19,4 +19,4 @@ define([
             $scope.encrypted = md5.createHash($scope.passwd || '');
         };
     });
-})
+});

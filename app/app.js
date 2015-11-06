@@ -36,5 +36,5 @@ define([
     })
     .run(function(){
 
-    })
-})
+    });
+});

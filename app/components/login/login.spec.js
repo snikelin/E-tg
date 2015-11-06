@@ -13,7 +13,7 @@ define(['app','angular-mocks'],function(app){
                 $scope.passwd = "longenoughpassword";
                 $scope.submit();
                 $scope.encrypted.should.equal("6719003c3770069d88f9d3423fb1b067");
-            })
-        })
+            });
+        });
     });
 });
