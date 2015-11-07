@@ -1,10 +1,31 @@
+"use strict";
 
-var Account = function(){
+var Q = require("q");
 
-}
-
-Account.prototype.authenticate = function(username, passwd){
-    if(username == "testuser" && passwd == "")
+class Account {
+  constructor(){}
+  static findByEmail(email,password){
+    return Q.promise(function(resolve,reject,notify){
+      setTimeout(function(){
+        resolve({
+            id: "123",
+            name: "admin",
+            permissions: ['administrator']
+        });
+      });
+    });
+  }
+  static findBySerial(serial){
+    return Q.promise(function(resolve,reject,notify){
+      setTimeout(function(){
+        resolve({
+            id: "123",
+            name: "admin",
+            permissions: ['administrator']
+        });
+      });
+    });
+  }
 }
 
 module.exports = Account;
