@@ -60,13 +60,20 @@ define(['app','angular-mocks','components/login/auth'],function(app){
             });
             it('should login a user if function login called',function(done){
                 $httpBackend.expectPOST(authConstants.serviceUrl+"/login",
-                        {email:"test@example.com",password:"6719003c3770069d88f9d3423fb1b067"}
-                    )
+                        {
+                            email:"test@example.com",
+                            password:"6719003c3770069d88f9d3423fb1b067",
+                            loginType: authConstants.enums.loginType.email
+                        })
                     .respond({
                         status:"success",
                         user: {name:"admin", permissions:["administrator",]}
                     });
-                authentication.login("test@example.com","longenoughpassword")
+                authentication.login({
+                    email:"test@example.com",
+                    password:"longenoughpassword",
+                    loginType:authConstants.enums.loginType.email
+                })
                     .then(function(){
                         var user = authentication.getCurrentUser();
                         expect(user).to.be.an('object');

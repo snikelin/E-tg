@@ -12,6 +12,10 @@ define(['angular','ui.router','angular-md5','angular-cookies'],function(angular)
                     authorized: 0,    // user can proceed;
                     loginRequired: 1, // redirect user to login
                     notAuthorized: 2  // rejected
+                },
+                loginType: {
+                    email: 0,
+                    ICCard: 1
                 }
             },
             events: {
@@ -36,10 +40,20 @@ define(['angular','ui.router','angular-md5','angular-cookies'],function(angular)
                     permissions: permissions
                 };
             };
-            var login = function(email, password){
+            var login = function(loginInfo){
                 var deferred = $q.defer();
+                loginInfo.loginType = loginInfo.loginType || authConstants.enums.loginType.email;
+                var postData = {};
+                if(loginInfo.loginType == authConstants.enums.loginType.email) {
+                    postData.email = loginInfo.email;
+                    postData.password = md5.createHash(loginInfo.password);
+                    postData.loginType = loginInfo.loginType;
+                } else {
+                    postData.serial = loginInfo.serial;
+                    postData.loginType = loginInfo.loginType;
+                }
                 $http.post(authServiceLoginUrl,
-                    {email:email, password: md5.createHash(password)},
+                    postData,
                     {
                         xsrfHeaderName: "XSRF-T0KEN",
                         xsrfCookieName: "X-XSRF-T0KEN"
@@ -59,7 +73,7 @@ define(['angular','ui.router','angular-md5','angular-cookies'],function(angular)
                         deferred.resolve();
                         $rootScope.$broadcast(authConstants.events.loggedIn);
                     } else {
-                        deferred.reject("password not match");
+                        deferred.reject();
                     }
                 },function(response){
                     deferred.reject(response.statusText);
