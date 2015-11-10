@@ -6,9 +6,14 @@ var gls = require("gulp-live-server");
 var testServer = require('karma').Server;
 var mocha = require("gulp-mocha");
 var bower = require("gulp-bower");
+var html2js = require("gulp-ng-html2js");
+var concat = require('gulp-concat-util');
+var minifyHtml = require("gulp-minify-html");
+var uglify = require("gulp-uglify");
 
 var paths = {
-  stylus: ['app/css/**/*.styl']
+  stylus: ['app/css/**/*.styl'],
+  templates: ['app/components/**/*.html']
 };
 
 gulp.task('default', ['stylus']);
@@ -22,6 +27,31 @@ gulp.task('stylus', function(done) {
     .on('end', done);
 });
 
+gulp.task('html2js',function(done){
+    gulp.src(paths.templates)
+        // .pipe(minifyHtml({
+        //     empty: true,
+        //     spare: true,
+        //     quotes: true
+        // }))
+        .pipe(html2js({
+            moduleName: 'etgApp.templates',
+            prefix: 'components/',
+            declareModule: false,
+            template: // change template.prettyEscapedContent to template.escapedContent in Prodcution environment
+                "$templateCache.put('<%= template.url %>',\n    '<%= template.prettyEscapedContent %>');\n"
+        }))
+        .pipe(concat("templates.js"))
+        .pipe(concat.header(
+            "define(['angular'],function(angular){'use strict';\n " +
+            "return angular.module('etgApp.templates',[]).run(['$templateCache', function($templateCache) {\n"
+        ))
+        .pipe(concat.footer("\t}]);\n});"))
+        //.pipe(uglify())
+        .pipe(gulp.dest("app/"));
+});
+
+
 gulp.task("bower", function(){
     return bower()
         .pipe(gulp.dest("app/bower_components"));
@@ -29,6 +59,7 @@ gulp.task("bower", function(){
 
 gulp.task('watch', function() {
   gulp.watch(paths.stylus, ['stylus']);
+  gulp.watch(paths.templates, ['html2js']);
 });
 
 gulp.task('serve',['watch'], function(){

@@ -8,9 +8,10 @@ define([
     'angular-cookies',
     'angular-sanitize',
     'ui.bootstrap',
+    'templates',
     'components/home/home',
     'components/login/login'
-],function(angular,uiRouter, home, login){
+],function(angular){
     return angular.module('etgApp',[
         'ui.router',
         'ngResource',
@@ -18,6 +19,7 @@ define([
         'ngCookies',
         'ngSanitize',
         'ui.bootstrap',
+        'etgApp.templates',
         'etgApp.home',
         'etgApp.login'
     ])
@@ -31,10 +33,8 @@ define([
         //         url: "/login",
         //         templateUrl:"components/login/login.html"
         //     });
-
         $urlRouterProvider.otherwise("/home");
     })
     .run(function(){
-
     });
 });

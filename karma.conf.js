@@ -15,7 +15,9 @@ module.exports = function(config){
       {pattern: 'app/bower_components/angular-mocks/angular-mocks.js', included: false},
       {pattern: 'app/bower_components/jquery/dist/jquery.min.js', included: false},
       {pattern: 'app/components/**/*.js', included: false},
+      {pattern: 'app/templates.js', included: false},
       {pattern: 'app/app.js', included: false},
+      //"**/*.html",
 
       // needs to be last
       'app/main.js'
@@ -26,7 +28,8 @@ module.exports = function(config){
     browsers: ['PhantomJS'],
     reporters: ['mocha','coverage'],
     preprocessors:{
-        'app/components/**/*.js': ['coverage']
+        'app/components/**/*.js': ['coverage'],
+    //    'app/components/**/*.html': ['ng-html2js']
     },
     coverageReporter:{
         dir: 'build/reports/coverage',
@@ -35,13 +38,18 @@ module.exports = function(config){
             {type: 'text', subdir: '.', file: 'text.txt'}
         ]
     },
+    // ngHtml2JsPreprocessor: {
+    //     stripPrefix: 'app/',
+    //     moduleName: 'etgApp.templates'
+    // },
     plugins: [
       'karma-phantomjs-launcher',
       'karma-chai',
       'karma-mocha',
       'karma-requirejs',
       'karma-mocha-reporter',
-      'karma-coverage'
+      'karma-coverage',
+      //'karma-ng-html2js-preprocessor'
     ]
   });
 };

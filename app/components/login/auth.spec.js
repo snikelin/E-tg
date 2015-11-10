@@ -1,6 +1,7 @@
-'use strict';
 
-define(['app','angular-mocks','components/login/auth'],function(app){
+
+define(['app','angular-mocks','./auth'],function(app){
+    'use strict';
     describe('auth module',function(){
 
         beforeEach(module('etgApp.auth',function($stateProvider, authConstants){

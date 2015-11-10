@@ -12,7 +12,7 @@ function Strategy(options) {
 
 Strategy.loginType = {
   email: 0,
-  ICCard: 1
+  IKey: 1
 };
 
 
@@ -41,10 +41,10 @@ Strategy.prototype.authenticate = function(req, options) {
   }
 
   function lookup(obj){
-    if(obj.loginType === Strategy.loginType.ICCard && obj.serial) {
+    if(obj.loginType === Strategy.loginType.IKey && obj.serial) {
       return {
         "serial":obj.serial,
-        "loginType": Strategy.loginType.ICCard
+        "loginType": Strategy.loginType.IKey
       };
     } else if(obj.loginType === Strategy.loginType.email && obj.email && obj.password) {
         return {

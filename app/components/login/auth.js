@@ -1,6 +1,10 @@
-'use strict';
+/*
+    Author: Beeven Yip
+    Created on: 11/10/2015
+*/
 
 define(['angular','ui.router','angular-md5','angular-cookies'],function(angular){
+    'use strict';
     angular.module('etgApp.auth',['ui.router','angular-md5','ngCookies'])
         .constant('authConstants',{
             enums: {
@@ -15,7 +19,7 @@ define(['angular','ui.router','angular-md5','angular-cookies'],function(angular)
                 },
                 loginType: {
                     email: 0,
-                    ICCard: 1
+                    IKey: 1
                 }
             },
             events: {
