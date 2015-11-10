@@ -48,7 +48,8 @@ gulp.task('html2js',function(done){
         ))
         .pipe(concat.footer("\t}]);\n});"))
         //.pipe(uglify())
-        .pipe(gulp.dest("app/"));
+        .pipe(gulp.dest("app/"))
+        .on('end',done);
 });
 
 
@@ -65,7 +66,7 @@ gulp.task('watch', function() {
 gulp.task('serve',['watch'], function(){
     var server = gls('server/server.js',{env:{NODE_ENV: 'development', PORT:'8080'}});
     server.start();
-    gulp.watch(['app/**/*.css','app/**/*.html','app/**/*.js','!app/**/*.spec.js'], function(file){
+    gulp.watch(['app/**/*.css','app/templates.js','app/**/*.js','!app/**/*.spec.js'], function(file){
         console.log("file change detected, reloading");
         server.notify.apply(server,[file]);
     });
@@ -81,12 +82,18 @@ gulp.task('test_app',function(done){
   }, done).start();
 });
 
-gulp.task('test_server',function(){
+gulp.task('test_server',function(done){
     gulp.src("server/tests/**/*.test.js",{read:false})
         .pipe(mocha({
             reporter: 'spec',
             require: ['chai']
-        }));
+        }))
+        .once('error',function(){
+            process.exit(1);
+        })
+        .once('end',function(){
+            done();
+        });
 });
 
 gulp.task('test',['test_server','test_app']);

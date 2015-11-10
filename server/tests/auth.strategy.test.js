@@ -12,30 +12,14 @@ var Q = require("q");
 
 
 describe("EtgStrategy",function(){
-  beforeEach(function(){
-    function fakeUserPromise(){
-      return Q.promise(function(resolve,reject,notify){
-        setTimeout(function(){
-          resolve({
-              id: "123",
-              name: "admin",
-              permissions: ['administrator']
-          });
-        });
-      });
-    }
-    sinon.stub(account,'findByEmail',function(email,password){
-      return fakeUserPromise();
-    });
-    sinon.stub(account,'findBySerial',function(serial){
-      return fakeUserPromise();
-    });
+  var strategy = new EtgStrategy(function(loginInfo, done){
+      if(loginInfo.email === "test@example.com"){
+          done(null,{id:'123',name:"admin"});
+      }
+      else {
+          done(null,false,'user not found');
+      }
   });
-  afterEach(function(){
-    account.findByEmail.restore();
-    account.findBySerial.restore();
-  });
-  var strategy = new EtgStrategy();
   describe('handling a request with a valid credential in body',function(){
     var user,info;
     before(function(done){
@@ -56,6 +40,27 @@ describe("EtgStrategy",function(){
     it("should supply user",function(){
       user.should.to.be.an('object');
       user.id.should.equal('123');
+      user.name.should.equal('admin');
     });
+  });
+  describe('handling a request with an invalid credential in body',function(){
+      var error;
+      before(function(done){
+        chai.passport.use(strategy)
+          .fail(function(err){
+            error = err;
+            done();
+          })
+          .req(function(req){
+            req.body = {};
+            req.body.email = "abc";
+            req.body.password = "def";
+            req.body.loginType = EtgStrategy.loginType.email;
+          })
+          .authenticate();
+      });
+      it("should provide fail information",function(){
+          error.should.equal('user not found');
+      });
   });
 });

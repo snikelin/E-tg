@@ -10,7 +10,8 @@ define([
     'ui.bootstrap',
     'templates',
     'components/home/home',
-    'components/login/login'
+    'components/login/main',
+    'components/auth/auth'
 ],function(angular){
     return angular.module('etgApp',[
         'ui.router',
@@ -21,7 +22,8 @@ define([
         'ui.bootstrap',
         'etgApp.templates',
         'etgApp.home',
-        'etgApp.login'
+        'etgApp.login',
+        'etgApp.auth'
     ])
     .config(function($stateProvider, $urlRouterProvider){
         // $stateProvider

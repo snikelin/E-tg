@@ -1,0 +1,30 @@
+<div class="login-widget container-fluid">
+  <uib-tabset justified="true">
+      <uib-tab heading="邮箱登录">
+          <form>
+              <div class="input-group">
+                  <span class="input-group-addon">
+                      <i class="glyphicon glyphicon-user"></i>
+                  </span>
+                  <input type="text" class="form-control" placeholder="邮箱" ng-model="user.email">
+              </div>
+              <div class="input-group">
+                  <div class="input-group-addon">
+                      <i class="glyphicon glyphicon-lock"></i>
+                  </div>
+                  <input type="password" class="form-control" placeholder="密码" ng-model="user.password">
+              </div>
+              <div class="input-group">
+                  <a href="">忘记密码?</a>
+              </div>
+              <button class="btn btn-primary btn-block" ng-click="loginWithEmail()">登&nbsp;录</button>
+          </form>
+      </uib-tab>
+      <uib-tab heading="IKey登录">
+          <form>
+                  <p>请插入IKey并点击登录</p>
+                  <button class="btn btn-primary btn-block" ng-click="loginWithIKey()">登&nbsp;录</button>
+          </form>
+      </uib-tab>
+  </uib-tabset>
+</div>

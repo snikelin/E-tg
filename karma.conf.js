@@ -26,7 +26,7 @@ module.exports = function(config){
     //singleRun: true,
     frameworks: ['mocha','requirejs','chai'],
     browsers: ['PhantomJS'],
-    reporters: ['mocha','coverage'],
+    reporters: ['mocha','coverage'],//,'coveralls'
     preprocessors:{
         'app/components/**/*.js': ['coverage'],
     //    'app/components/**/*.html': ['ng-html2js']
@@ -35,9 +35,13 @@ module.exports = function(config){
         dir: 'build/reports/coverage',
         reporters: [
             {type: 'html', subdir: 'report-html'},
-            {type: 'text', subdir: '.', file: 'text.txt'}
+            {type: 'text', subdir: '.', file: 'text.txt'},
+            // {type: 'lcov', subdir: 'coveralls'}
         ]
     },
+    // coverallsReporter: {
+    //     repoToken: 'dVG6Zf9dBUDBWY462EUVBgzoHNLLyAKA9'
+    // },
     // ngHtml2JsPreprocessor: {
     //     stripPrefix: 'app/',
     //     moduleName: 'etgApp.templates'
@@ -49,6 +53,7 @@ module.exports = function(config){
       'karma-requirejs',
       'karma-mocha-reporter',
       'karma-coverage',
+    //   'karma-coveralls'
       //'karma-ng-html2js-preprocessor'
     ]
   });
