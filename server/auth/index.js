@@ -14,12 +14,13 @@ var passport = require("passport"),
 
 
 var Auth = function(options){
-    console.log("creating auth");
+    //console.log("creating auth");
   options = options || {};
   options.path = options.path || '/auth';
 
   // user our strategy
   passport.use(new EtgStrategy(function(loginInfo, done){
+      //console.log("loginInfo:",loginInfo);
       if(loginInfo.loginType === EtgStrategy.loginType.email){
           account.findByEmail(loginInfo.email,loginInfo.password)
             .then(function(user){
@@ -41,27 +42,23 @@ var Auth = function(options){
 
   // implement serialize & deserialize for sessions to work
   passport.serializeUser(function(user,done){
-      console.log("Serializing",user);
+      //console.log("Serializing",user);
       done(null,user.id);
   });
-  passport.deserializeUser(function(userid,done){
-      console.log("deserializing",userid);
-      done(null,userid);
+  passport.deserializeUser(function(user,done){
+      //console.log("deserializing",userid);
+      done(null,user);
   });
 
   router.post(options.path+"/login",function(req,res,next){
       passport.authenticate('etg',function(err,user){
-          console.log("auth success",err,user);
+          //console.log("auth success",err,user);
           if(err){ return next(err); }
           if(!user){
               return res.json({status:"fail",statusText:"Information incorrect"});
           }
-        //   else {
-        //       console.log("sending success");
-        //       return res.json({status:"success",user:{name:user.name,id:user.id,permissions:user.permissions}});
-        //   }
           req.logIn(user,function(err){
-              console.log("req.logIn",err,user);
+              //console.log("req.logIn",err,user);
               if(err) { return next(err);}
               return res.json({status:"success", user: {id: user.id, name:user.name, permissions:user.permissions}});
           });
